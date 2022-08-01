@@ -29,6 +29,9 @@ namespace Chess
             {25,24,23,22,21,23,24,25 } // 1-ладья, 2-конь, 3-слон, 4-ферзь, 5-король, 
         };
 
+        // предыдущая нажатая кнопка
+        public Button prevButton;
+
         public Form1()
         {
             InitializeComponent();
@@ -77,6 +80,7 @@ namespace Chess
                             button.BackgroundImage = part1;
                             break;
                     }
+
                     button.Click += new EventHandler(OnFigurePress);
                     this.Controls.Add(button);
                 }
@@ -86,10 +90,16 @@ namespace Chess
         // нажатие на фигуру
         public void OnFigurePress(object sender, EventArgs e)
         {
+            if (prevButton != null)
+                prevButton.BackColor = Color.Transparent;
+
             Button pressButton = sender as Button;
             pressButton.BackColor = Color.Red;
+
+            prevButton = pressButton;
         }
 
+        // выход
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
