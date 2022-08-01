@@ -12,11 +12,27 @@ namespace Chess
 {
     public partial class Form1 : Form
     {
+        // хранится изображение фигуры
         public Image chessSprites;
+
+        // карта 8х8
+        public int[,] map = new int[8, 8]
+        {
+            {0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0 },
+        };
+
         public Form1()
         {
             InitializeComponent();
 
+            // путь
             chessSprites = new Bitmap("D:\\Valera_Doks\\Desktop\\chess.png");
             Image part = new Bitmap(50, 50);
             Graphics g = Graphics.FromImage(part);
