@@ -77,10 +77,17 @@ namespace Chess
                             button.BackgroundImage = part1;
                             break;
                     }
-
+                    button.Click += new EventHandler(OnFigurePress);
                     this.Controls.Add(button);
                 }
             }
+        }
+
+        // нажатие на фигуру
+        public void OnFigurePress(object sender, EventArgs e)
+        {
+            Button pressButton = sender as Button;
+            pressButton.BackColor = Color.Red;
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
