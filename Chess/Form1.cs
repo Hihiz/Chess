@@ -65,7 +65,7 @@ namespace Chess
                             Image part = new Bitmap(50, 50);
                             Graphics g = Graphics.FromImage(part);
                             // спрайты фигур
-                            g.DrawImage(chessSprites, new Rectangle(0, 0, 50, 50), 0 + 150 * map[i, j] % 150, 0, 150, 150, GraphicsUnit.Pixel);
+                            g.DrawImage(chessSprites, new Rectangle(0, 0, 50, 50), 0 + 150 * (map[i, j] % 10 - 1), 0, 150, 150, GraphicsUnit.Pixel);
                             button.BackgroundImage = part;
                             break;
                         // второй игрок
@@ -73,7 +73,7 @@ namespace Chess
                             Image part1 = new Bitmap(50, 50);
                             Graphics g1 = Graphics.FromImage(part1);
                             // спрайты фигур
-                            g1.DrawImage(chessSprites, new Rectangle(0, 0, 50, 50), 0 + 150 * map[i, j] % 150, 150, 150, 150, GraphicsUnit.Pixel);
+                            g1.DrawImage(chessSprites, new Rectangle(0, 0, 50, 50), 0 + 150 * (map[i, j] % 10 - 1), 150, 150, 150, GraphicsUnit.Pixel);
                             button.BackgroundImage = part1;
                             break;
                     }
