@@ -39,6 +39,29 @@ namespace Chess
             Graphics g = Graphics.FromImage(part);
             g.DrawImage(chessSprites, new Rectangle(0, 0, 50, 50), 0, 0, 150, 150, GraphicsUnit.Pixel);
             button1.BackgroundImage = part;
+
+            Init();
+        }
+
+        public void Init()
+        {
+
+        }
+
+        public void CreateMap()
+        {
+            for (int i = 0; i < map.Length; i++)
+            {
+                for (int j = 0; j < map.Length; j++)
+                {
+                    Button button = new Button();
+                    // размер кнопки
+                    button.Size = new Size(50, 50);
+                    // позиция кнопки
+                    button.Location = new Point(j * 50, i * 50);
+                    this.Controls.Add(button);
+                }
+            }
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
