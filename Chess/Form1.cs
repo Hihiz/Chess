@@ -18,15 +18,15 @@ namespace Chess
         // карта 8х8
         public int[,] map = new int[8, 8]
         {
-            // растановка фигур
-            {5,4,3,2,1,3,4,5 }, // 1-ладья, 2-конь, 3-слон, 4-ферзь, 5-король, 
-            {6,6,6,6,6,6,6,6 }, // пешки
+            // растановка фигур      1 игрок
+            {15,14,13,12,11,13,14,15 }, // 1-ладья, 2-конь, 3-слон, 4-ферзь, 5-король, 
+            {16,16,16,16,16,16,16,16 }, // пешки
             {0,0,0,0,0,0,0,0 },
             {0,0,0,0,0,0,0,0 },
             {0,0,0,0,0,0,0,0 },
-            {0,0,0,0,0,0,0,0 },
-            {6,6,6,6,6,6,6,6 }, // пешки
-            {5,4,3,2,1,3,4,5 } // 1-ладья, 2-конь, 3-слон, 4-ферзь, 5-король, 
+            {0,0,0,0,0,0,0,0 },         // 2 игрок
+            {26,26,26,26,26,26,26,26 }, // пешки
+            {25,24,23,22,21,23,24,25 } // 1-ладья, 2-конь, 3-слон, 4-ферзь, 5-король, 
         };
 
         public Form1()
@@ -35,30 +35,49 @@ namespace Chess
 
             // путь
             chessSprites = new Bitmap("D:\\Valera_Doks\\Desktop\\chess.png");
-            Image part = new Bitmap(50, 50);
-            Graphics g = Graphics.FromImage(part);
-            g.DrawImage(chessSprites, new Rectangle(0, 0, 50, 50), 0, 0, 150, 150, GraphicsUnit.Pixel);
-            button1.BackgroundImage = part;
+            // button1.BackgroundImage = part;
 
             Init();
         }
 
         public void Init()
         {
-
+            CreateMap();
         }
 
+        // создание карты
         public void CreateMap()
         {
-            for (int i = 0; i < map.Length; i++)
+            for (int i = 0; i < map.GetLength(0); i++)
             {
-                for (int j = 0; j < map.Length; j++)
+                for (int j = 0; j < map.GetLength(1); j++)
                 {
                     Button button = new Button();
                     // размер кнопки
                     button.Size = new Size(50, 50);
                     // позиция кнопки
                     button.Location = new Point(j * 50, i * 50);
+
+                    switch (map[i, j] / 10)
+                    {
+                        // первый игрок
+                        case 1:
+                            Image part = new Bitmap(50, 50);
+                            Graphics g = Graphics.FromImage(part);
+                            // спрайты фигур
+                            g.DrawImage(chessSprites, new Rectangle(0, 0, 50, 50), 0 + 150 * map[i, j] % 150, 0, 150, 150, GraphicsUnit.Pixel);
+                            button.BackgroundImage = part;
+                            break;
+                        // второй игрок
+                        case 2:
+                            Image part1 = new Bitmap(50, 50);
+                            Graphics g1 = Graphics.FromImage(part1);
+                            // спрайты фигур
+                            g1.DrawImage(chessSprites, new Rectangle(0, 0, 50, 50), 0 + 150 * map[i, j] % 150, 150, 150, 150, GraphicsUnit.Pixel);
+                            button.BackgroundImage = part1;
+                            break;
+                    }
+
                     this.Controls.Add(button);
                 }
             }
