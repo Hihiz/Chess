@@ -45,6 +45,20 @@ namespace Chess
 
         public void Init()
         {
+            // карта 8х8
+            map = new int[8, 8]
+            {
+            // растановка фигур      1 игрок
+            {15,14,13,12,11,13,14,15 }, // 1-ладья, 2-конь, 3-слон, 4-ферзь, 5-король, 
+            {16,16,16,16,16,16,16,16 }, // пешки
+            {0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0 },         // 2 игрок
+            {26,26,26,26,26,26,26,26 }, // пешки
+            {25,24,23,22,21,23,24,25 } // 1-ладья, 2-конь, 3-слон, 4-ферзь, 5-король, 
+            };
+
             currentPlayer = 1;
 
             CreateMap();
@@ -97,7 +111,7 @@ namespace Chess
 
             Button pressButton = sender as Button;
 
-            if (map[pressButton.Location.Y / 50, pressButton.Location.X / 50] != 0)
+            if (map[pressButton.Location.Y / 50, pressButton.Location.X / 50] != 0 && map[pressButton.Location.Y / 50, pressButton.Location.X / 50] / 10 == currentPlayer)
             {
                 pressButton.BackColor = Color.Red;
                 // фигура в движении
@@ -112,6 +126,11 @@ namespace Chess
                     map[prevButton.Location.Y / 50, prevButton.Location.X / 50] = temp;
                     pressButton.BackgroundImage = prevButton.BackgroundImage;
                     prevButton.BackgroundImage = null;
+
+                    // конец движения
+                    isMoving = false;
+
+                    SwitchPlayer();
                 }
             }
 
@@ -131,6 +150,16 @@ namespace Chess
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
+        }
+
+        // кнопка рестарта
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // удалить все кнопки
+            this.Controls.Clear();
+
+            // пересоздание карты и кнопок
+            Init();
         }
     }
 }
