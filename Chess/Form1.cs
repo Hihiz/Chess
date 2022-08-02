@@ -23,6 +23,9 @@ namespace Chess
             {25,24,23,22,21,23,24,25 } // 1-ладья, 2-конь, 3-слон, 4-ферзь, 5-король, 
         };
 
+        // текущий игрок
+        public int currentPlayer;
+
         // предыдущая нажатая кнопка
         public Button prevButton;
 
@@ -42,6 +45,8 @@ namespace Chess
 
         public void Init()
         {
+            currentPlayer = 1;
+
             CreateMap();
         }
 
@@ -111,6 +116,15 @@ namespace Chess
             }
 
             prevButton = pressButton;
+        }
+
+        //выбор игрока
+        public void SwitchPlayer()
+        {
+            if (currentPlayer == 1)
+                currentPlayer = 2;
+            else
+                currentPlayer = 1;
         }
 
         // выход
