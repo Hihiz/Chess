@@ -147,6 +147,35 @@ namespace Chess
             prevButton = pressButton;
         }
 
+        public void ShowSteps(int IcurrentFigure, int JcurrentFigure, int currentFigure)
+        {
+
+        }
+
+        // выключить все кнопки
+        public void DeactivateAllButtons()
+        {
+            for (int i = 0; i < butts.GetLength(0); i++)
+            {
+                for (int j = 0; j < butts.GetLength(1); j++)
+                {
+                    butts[i, j].Enabled = false;
+                }
+            }
+        }
+
+        // включить все кнопки
+        public void ActivateAllButtons()
+        {
+            for (int i = 0; i < butts.GetLength(0); i++)
+            {
+                for (int j = 0; j < butts.GetLength(1); j++)
+                {
+                    butts[i, j].Enabled = true;
+                }
+            }
+        }
+
         //выбор игрока
         public void SwitchPlayer()
         {
