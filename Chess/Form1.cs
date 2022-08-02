@@ -23,6 +23,9 @@ namespace Chess
             {25,24,23,22,21,23,24,25 } // 1-ладья, 2-конь, 3-слон, 4-ферзь, 5-король, 
         };
 
+        // массив кнопок
+        public Button[,] butts = new Button[8, 8];
+
         // текущий игрок
         public int currentPlayer;
 
@@ -71,11 +74,13 @@ namespace Chess
             {
                 for (int j = 0; j < map.GetLength(1); j++)
                 {
-                    Button button = new Button();
+                    butts[i, j] = new Button();
+
+                    Button butt = new Button();
                     // размер кнопки
-                    button.Size = new Size(50, 50);
+                    butt.Size = new Size(50, 50);
                     // позиция кнопки
-                    button.Location = new Point(j * 50, i * 50);
+                    butt.Location = new Point(j * 50, i * 50);
 
                     switch (map[i, j] / 10)
                     {
@@ -85,7 +90,7 @@ namespace Chess
                             Graphics g = Graphics.FromImage(part);
                             // спрайты фигур
                             g.DrawImage(chessSprites, new Rectangle(0, 0, 50, 50), 0 + 150 * (map[i, j] % 10 - 1), 0, 150, 150, GraphicsUnit.Pixel);
-                            button.BackgroundImage = part;
+                            butt.BackgroundImage = part;
                             break;
                         // второй игрок
                         case 2:
@@ -93,12 +98,15 @@ namespace Chess
                             Graphics g1 = Graphics.FromImage(part1);
                             // спрайты фигур
                             g1.DrawImage(chessSprites, new Rectangle(0, 0, 50, 50), 0 + 150 * (map[i, j] % 10 - 1), 150, 150, 150, GraphicsUnit.Pixel);
-                            button.BackgroundImage = part1;
+                            butt.BackgroundImage = part1;
                             break;
                     }
 
-                    button.Click += new EventHandler(OnFigurePress);
-                    this.Controls.Add(button);
+                    butt.Click += new EventHandler(OnFigurePress);
+                    this.Controls.Add(butt);
+
+                    // в ячейку записываем кнопку butt
+                    butts[i, j] = butt;
                 }
             }
         }
@@ -110,6 +118,8 @@ namespace Chess
                 prevButton.BackColor = Color.Transparent;
 
             Button pressButton = sender as Button;
+
+            pressButton.Enabled = false;
 
             if (map[pressButton.Location.Y / 50, pressButton.Location.X / 50] != 0 && map[pressButton.Location.Y / 50, pressButton.Location.X / 50] / 10 == currentPlayer)
             {
