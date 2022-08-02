@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Chess
@@ -31,6 +25,9 @@ namespace Chess
 
         // предыдущая нажатая кнопка
         public Button prevButton;
+
+        // фигура в движении  
+        public bool isMoving = false;
 
         public Form1()
         {
@@ -94,7 +91,24 @@ namespace Chess
                 prevButton.BackColor = Color.Transparent;
 
             Button pressButton = sender as Button;
-            pressButton.BackColor = Color.Red;
+
+            if (map[pressButton.Location.Y / 50, pressButton.Location.X / 50] != 0)
+            {
+                pressButton.BackColor = Color.Red;
+                // фигура в движении
+                isMoving = true;
+            }
+            else
+            {
+                if (isMoving)
+                {
+                    int temp = map[pressButton.Location.Y / 50, pressButton.Location.X / 50];
+                    map[pressButton.Location.Y / 50, pressButton.Location.Y / 50] = map[prevButton.Location.Y / 50, prevButton.Location.X / 50];
+                    map[prevButton.Location.Y / 50, prevButton.Location.X / 50] = temp;
+                    pressButton.BackgroundImage = prevButton.BackgroundImage;
+                    prevButton.BackgroundImage = null;
+                }
+            }
 
             prevButton = pressButton;
         }
