@@ -103,7 +103,7 @@ namespace Chess
                 if (isMoving)
                 {
                     int temp = map[pressButton.Location.Y / 50, pressButton.Location.X / 50];
-                    map[pressButton.Location.Y / 50, pressButton.Location.Y / 50] = map[prevButton.Location.Y / 50, prevButton.Location.X / 50];
+                    map[pressButton.Location.Y / 50, pressButton.Location.X / 50] = map[prevButton.Location.Y / 50, prevButton.Location.X / 50];
                     map[prevButton.Location.Y / 50, prevButton.Location.X / 50] = temp;
                     pressButton.BackgroundImage = prevButton.BackgroundImage;
                     prevButton.BackgroundImage = null;
