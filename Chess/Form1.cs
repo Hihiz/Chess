@@ -140,6 +140,8 @@ namespace Chess
                     // конец движения
                     isMoving = false;
 
+                    ActivateAllButtons();
+
                     SwitchPlayer();
                 }
             }
@@ -147,6 +149,7 @@ namespace Chess
             prevButton = pressButton;
         }
 
+        // показывать шаги для хода
         public void ShowSteps(int IcurrentFigure, int JcurrentFigure, int currentFigure)
         {
 
@@ -183,6 +186,17 @@ namespace Chess
                 currentPlayer = 2;
             else
                 currentPlayer = 1;
+        }
+
+        public void CloseSteps()
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    butts[i, j].BackColor = Color.White;
+                }
+            }
         }
 
         // выход
