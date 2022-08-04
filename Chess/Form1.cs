@@ -149,10 +149,35 @@ namespace Chess
             prevButton = pressButton;
         }
 
-        // показывать шаги для хода
+        // показывать шаги для выбранной фигуры
         public void ShowSteps(int IcurrentFigure, int JcurrentFigure, int currentFigure)
         {
+            int dir = currentPlayer == 1 ? 1 : -1;
 
+            switch (currentFigure % 10)
+            {
+                case 6:
+                    {
+                        if (InsideBorder(IcurrentFigure + 1 * dir, JcurrentFigure))
+                        {
+                            if (map[IcurrentFigure + 1 * dir, JcurrentFigure] == 0)
+                            {
+                                butts[IcurrentFigure + 1 * dir, JcurrentFigure].BackColor = Color.Yellow;
+                                butts[IcurrentFigure + 1 * dir, JcurrentFigure].Enabled = true;
+
+                                if (InsideBorder(IcurrentFigure + 2 * dir, JcurrentFigure))
+                                {
+                                    if (map[IcurrentFigure + 2 * dir, JcurrentFigure] == 0)
+                                    {
+                                        butts[IcurrentFigure + 2 * dir, JcurrentFigure].BackColor = Color.Yellow;
+                                        butts[IcurrentFigure + 2 * dir, JcurrentFigure].Enabled = true;
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+            }
         }
 
         // выключить все кнопки
@@ -188,6 +213,17 @@ namespace Chess
                 currentPlayer = 1;
         }
 
+        // значение на доске
+        public bool InsideBorder(int ti, int tj)
+        {
+            if (ti >= 8 || tj >= 8 || ti < 0 || tj < 0)
+                return false;
+
+            return true;
+
+        }
+
+        // конец шага
         public void CloseSteps()
         {
             for (int i = 0; i < 8; i++)
