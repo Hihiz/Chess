@@ -152,32 +152,119 @@ namespace Chess
         // показывать шаги для выбранной фигуры
         public void ShowSteps(int IcurrentFigure, int JcurrentFigure, int currentFigure)
         {
+            // текущий игрок
             int dir = currentPlayer == 1 ? 1 : -1;
 
             switch (currentFigure % 10)
             {
+                // для пешки
                 case 6:
+                    if (InsideBorder(IcurrentFigure + 1 * dir, JcurrentFigure))
                     {
-                        if (InsideBorder(IcurrentFigure + 1 * dir, JcurrentFigure))
+                        if (map[IcurrentFigure + 1 * dir, JcurrentFigure] == 0)
                         {
-                            if (map[IcurrentFigure + 1 * dir, JcurrentFigure] == 0)
-                            {
-                                butts[IcurrentFigure + 1 * dir, JcurrentFigure].BackColor = Color.Yellow;
-                                butts[IcurrentFigure + 1 * dir, JcurrentFigure].Enabled = true;
-
-                                if (InsideBorder(IcurrentFigure + 2 * dir, JcurrentFigure))
-                                {
-                                    if (map[IcurrentFigure + 2 * dir, JcurrentFigure] == 0)
-                                    {
-                                        butts[IcurrentFigure + 2 * dir, JcurrentFigure].BackColor = Color.Yellow;
-                                        butts[IcurrentFigure + 2 * dir, JcurrentFigure].Enabled = true;
-
-                                    }
-                                }
-                            }
+                            // ход фигуры
+                            butts[IcurrentFigure + 1 * dir, JcurrentFigure].BackColor = Color.Yellow;
+                            butts[IcurrentFigure + 1 * dir, JcurrentFigure].Enabled = true;
                         }
                     }
+
+                    if (InsideBorder(IcurrentFigure + 1 * dir, JcurrentFigure + 1))
+                    {
+                        if (map[IcurrentFigure + 1 * dir, JcurrentFigure + 1] != 0 && map[IcurrentFigure + 1 * dir, JcurrentFigure + 1] / 10 != currentPlayer)
+                        {
+                            butts[IcurrentFigure + 1 * dir, JcurrentFigure].BackColor = Color.Yellow;
+                            butts[IcurrentFigure + 1 * dir, JcurrentFigure].Enabled = true;
+                        }
+                    }
+
+                    if (InsideBorder(IcurrentFigure + 1 * dir, JcurrentFigure - 1))
+                    {
+                        if (map[IcurrentFigure + 1 * dir, JcurrentFigure - 1] != 0 && map[IcurrentFigure + 1 * dir, JcurrentFigure - 1] / 10 != currentPlayer)
+                        {
+                            butts[IcurrentFigure + 1 * dir, JcurrentFigure - 1].BackColor = Color.Yellow;
+                            butts[IcurrentFigure + 1 * dir, JcurrentFigure - 1].Enabled = true;
+                        }
+                    }
+                    break;
+                case 5:
+                    ShowVerticalHorizontal(IcurrentFigure, JcurrentFigure);
+                    break;
             }
+        }
+
+        // показывать пути вверх вниз лево право
+        public void ShowVerticalHorizontal(int IcurrentFigure, int JcurrentFigure, bool isOneStep = false)
+        {
+            // показывать все возможные ходы вниз
+            for (int i = IcurrentFigure + 1; i < 8; i++)
+            {
+                if (InsideBorder(i, JcurrentFigure))
+                {                    
+                    if (!DeterminePath(i, JcurrentFigure))
+                        break;
+                }               
+                if (isOneStep)
+                    break;
+            }
+
+            // показывать все возможные ходы вверх
+            for (int i = IcurrentFigure - 1; i >= 0; i--)
+            {
+                if (InsideBorder(i, JcurrentFigure))
+                {
+                    if (!DeterminePath(i, JcurrentFigure))
+                        break;
+                }
+                if (isOneStep)
+                    break;
+            }
+
+            // показывать все возможные ходы вправо
+            for (int j = JcurrentFigure + 1; j < 8; j++)
+            {
+                if (InsideBorder(IcurrentFigure, j))
+                {
+                    if (!DeterminePath(IcurrentFigure, j))
+                        break;
+                }
+                if (isOneStep)
+                    break;
+            }
+
+            // показывать все возможные ходы влево
+            for (int j = JcurrentFigure - 1; j >= 0; j--)
+            {
+                if (InsideBorder(IcurrentFigure, j))
+                {
+                    if (!DeterminePath(IcurrentFigure, j))
+                        break;
+                }
+                if (isOneStep)
+                    break;
+            }
+        }
+
+        // проверка хода фигур
+        private bool DeterminePath(int IcurrentFigure, int j)
+        {
+            // если ход наш то показывать возможный ход
+            if (map[IcurrentFigure, j] == 0)
+            {
+                butts[IcurrentFigure, j].BackColor = Color.Yellow;
+                butts[IcurrentFigure, j].Enabled = true;
+            }
+            else
+            {
+                // фигура противника
+                if (map[IcurrentFigure, j] / 10 != currentPlayer)
+                {
+                    butts[IcurrentFigure, j].BackColor = Color.Yellow;
+                    butts[IcurrentFigure, j].Enabled = true;
+                }
+                return false;
+            }
+            return true;
         }
 
         // выключить все кнопки
