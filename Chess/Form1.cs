@@ -200,10 +200,10 @@ namespace Chess
             for (int i = IcurrentFigure + 1; i < 8; i++)
             {
                 if (InsideBorder(i, JcurrentFigure))
-                {                    
+                {
                     if (!DeterminePath(i, JcurrentFigure))
                         break;
-                }               
+                }
                 if (isOneStep)
                     break;
             }
@@ -240,6 +240,84 @@ namespace Chess
                     if (!DeterminePath(IcurrentFigure, j))
                         break;
                 }
+                if (isOneStep)
+                    break;
+            }
+        }
+
+        public void ShowDiagonal(int IcurrentFigure, int JcurrentFigure, bool isOneStep = false)
+        {
+            // движение вверх
+            int j = JcurrentFigure + 1;
+            for (int i = IcurrentFigure - 1; i >= 0; i--)
+            {
+                if (InsideBorder(i, j))
+                {
+                    // показ текущего хода
+                    if (!DeterminePath(i, j))
+                        break;
+                }
+                if (j < 7)
+                    j++;
+                else
+                    break;
+
+                if (isOneStep)
+                    break;
+            }
+
+            // движение вверх и влево
+            j = JcurrentFigure - 1;
+            for (int i = IcurrentFigure - 1; i >= 0; i--)
+            {
+                if (InsideBorder(i, j))
+                {
+                    if (!DeterminePath(i, j))
+                        break;
+                }
+                // край карты
+                if (j > 0)
+                    j--;
+                else
+                    break;
+
+                if (isOneStep)
+                    break;
+            }
+
+            // движение вверх и влево
+            j = JcurrentFigure - 1;
+            for (int i = IcurrentFigure + 1; i < 8; i++)
+            {
+                if (InsideBorder(i, j))
+                {
+                    if (!DeterminePath(i, j))
+                        break;
+                }
+                if (j > 0)
+                    j--;
+                else
+                    break;
+
+                if (isOneStep)
+                    break;
+            }
+
+            // движение вверх и вправо
+            j = JcurrentFigure + 1;
+            for (int i = IcurrentFigure + 1; i < 8; i++)
+            {
+                if (InsideBorder(i, j))
+                {
+                    if (!DeterminePath(i, j))
+                        break;
+                }
+
+                if (j < 7)
+                    j++;
+                else
+                    break;
+
                 if (isOneStep)
                     break;
             }
