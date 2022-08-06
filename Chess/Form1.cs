@@ -119,13 +119,34 @@ namespace Chess
 
             Button pressButton = sender as Button;
 
-            pressButton.Enabled = false;
+            //pressButton.Enabled = false;
 
             if (map[pressButton.Location.Y / 50, pressButton.Location.X / 50] != 0 && map[pressButton.Location.Y / 50, pressButton.Location.X / 50] / 10 == currentPlayer)
             {
+                CloseSteps();
                 pressButton.BackColor = Color.Red;
-                // фигура в движении
-                isMoving = true;
+                DeactivateAllButtons();
+                pressButton.Enabled = true;
+
+                // показ шагов
+                ShowSteps(pressButton.Location.Y / 50, pressButton.Location.X / 50, map[pressButton.Location.Y / 50, pressButton.Location.X / 50]);
+
+                if (isMoving)
+                {
+                    // закрытие шагов
+                    CloseSteps();
+
+                    // поменять цвет
+                    pressButton.BackColor = Color.White;
+
+                    // активировать кнопку
+                    ActivateAllButtons();
+
+                    // конец движение
+                    isMoving = false;
+                }
+                else
+                    isMoving = true;
             }
             else
             {
@@ -140,8 +161,8 @@ namespace Chess
                     // конец движения
                     isMoving = false;
 
+                    CloseSteps();
                     ActivateAllButtons();
-
                     SwitchPlayer();
                 }
             }
@@ -189,6 +210,20 @@ namespace Chess
                     break;
                 case 5:
                     ShowVerticalHorizontal(IcurrentFigure, JcurrentFigure);
+                    break;
+                case 3:
+                    ShowDiagonal(IcurrentFigure, JcurrentFigure);
+                    break;
+                case 2:
+                    ShowVerticalHorizontal(IcurrentFigure, JcurrentFigure);
+                    ShowDiagonal(IcurrentFigure, JcurrentFigure);
+                    break;
+                case 1:
+                    ShowVerticalHorizontal(IcurrentFigure, JcurrentFigure, true);
+                    ShowDiagonal(IcurrentFigure, JcurrentFigure, true);
+                    break;
+                case 4:
+                    ShowHorseSteps(IcurrentFigure, JcurrentFigure);
                     break;
             }
         }
@@ -324,15 +359,51 @@ namespace Chess
             }
         }
 
+        // ходя для коня
         public void ShowHorseSteps(int IcurrentFigure, int JcurrentFigure)
         {
-             // 31:42
+            // 8 ходов
+
+            // проверяем что находимся на карты
+            if (InsideBorder(IcurrentFigure - 2, JcurrentFigure + 1))
+            {
+                DeterminePath(IcurrentFigure - 2, JcurrentFigure + 1);
+            }
+            if (InsideBorder(IcurrentFigure - 2, JcurrentFigure - 1))
+            {
+                DeterminePath(IcurrentFigure - 2, JcurrentFigure - 1);
+            }
+            if (InsideBorder(IcurrentFigure + 2, JcurrentFigure + 1))
+            {
+                DeterminePath(IcurrentFigure + 2, JcurrentFigure + 1);
+            }
+            if (InsideBorder(IcurrentFigure + 2, JcurrentFigure - 1))
+            {
+                DeterminePath(IcurrentFigure + 2, JcurrentFigure - 1);
+            }
+            if (InsideBorder(IcurrentFigure - 1, JcurrentFigure + 2))
+            {
+                DeterminePath(IcurrentFigure - 1, JcurrentFigure + 2);
+            }
+            if (InsideBorder(IcurrentFigure + 1, JcurrentFigure + 2))
+            {
+                DeterminePath(IcurrentFigure + 1, JcurrentFigure + 2);
+            }
+            if (InsideBorder(IcurrentFigure - 1, JcurrentFigure - 2))
+            {
+                DeterminePath(IcurrentFigure - 1, JcurrentFigure - 2);
+            }
+            if (InsideBorder(IcurrentFigure + 1, JcurrentFigure - 2))
+            {
+                DeterminePath(IcurrentFigure + 1, JcurrentFigure - 2);
+            }
+
         }
 
         // проверка хода фигур
         private bool DeterminePath(int IcurrentFigure, int j)
         {
-            // если ход наш то показывать возможный ход
+            // если ход наш то показывать возможные ходы
             if (map[IcurrentFigure, j] == 0)
             {
                 butts[IcurrentFigure, j].BackColor = Color.Yellow;
@@ -391,7 +462,6 @@ namespace Chess
                 return false;
 
             return true;
-
         }
 
         // конец шага
