@@ -257,6 +257,7 @@ namespace Chess
                     if (!DeterminePath(i, j))
                         break;
                 }
+                // край карты
                 if (j < 7)
                     j++;
                 else
@@ -285,7 +286,7 @@ namespace Chess
                     break;
             }
 
-            // движение вверх и влево
+            // движение вниз и влево
             j = JcurrentFigure - 1;
             for (int i = IcurrentFigure + 1; i < 8; i++)
             {
@@ -303,7 +304,7 @@ namespace Chess
                     break;
             }
 
-            // движение вверх и вправо
+            // движение вниз и вправо
             j = JcurrentFigure + 1;
             for (int i = IcurrentFigure + 1; i < 8; i++)
             {
@@ -321,6 +322,11 @@ namespace Chess
                 if (isOneStep)
                     break;
             }
+        }
+
+        public void ShowHorseSteps(int IcurrentFigure, int JcurrentFigure)
+        {
+             // 31:42
         }
 
         // проверка хода фигур
