@@ -64,6 +64,7 @@ namespace Chess
 
             currentPlayer = 1;
 
+            // создание карты
             CreateMap();
         }
 
@@ -136,8 +137,8 @@ namespace Chess
                     // закрытие шагов
                     CloseSteps();
 
-                    // поменять цвет
-                    pressButton.BackColor = Color.White;
+                    // поменять цвет                   
+                    pressButton.BackColor = Color.Transparent;
 
                     // активировать кнопку
                     ActivateAllButtons();
@@ -471,7 +472,7 @@ namespace Chess
             {
                 for (int j = 0; j < 8; j++)
                 {
-                    butts[i, j].BackColor = Color.White;
+                    butts[i, j].BackColor = Color.Transparent;
                 }
             }
         }
